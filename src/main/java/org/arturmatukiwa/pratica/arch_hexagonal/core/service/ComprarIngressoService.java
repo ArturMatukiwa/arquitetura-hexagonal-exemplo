@@ -28,9 +28,7 @@ public class ComprarIngressoService implements ComprarIngressoUseCase {
 
     @Override
     public Venda executarOperacao(ComprarIngressoDto request) {
-        Objects.requireNonNull(request.cpfComprador(),  "'cpfComprador' possui valor nulo");
-        Objects.requireNonNull(request.setorIngresso(), "'setorIngresso' possui valor nulo");
-        Objects.requireNonNull(request.porcentagemDesconto(), "'porcentagemDesconto' possui valor nulo");
+        Objects.requireNonNull(request, "'request' possui valor nulo");
 
         if(request.porcentagemDesconto() < 0 || request.porcentagemDesconto() > 100) {
             throw new IllegalArgumentException("o valor de 'porcentagemDesconto' deve ter entre 0 e 100 ");
@@ -71,7 +69,7 @@ public class ComprarIngressoService implements ComprarIngressoUseCase {
         Double valorPago = ingresso.getPreco();
 
         if(porcentagemDesconto > 0) {
-            valorPago = valorPago * (porcentagemDesconto / 100);
+            valorPago = valorPago * (1 - porcentagemDesconto / 100);
         }
 
         return valorPago;
